@@ -29,14 +29,15 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash - \
     && apt-get install -y nodejs
 
-# 编译安装 ttyd - 很少变化，放在 npm 包前面
+# 编译安装 ttyd - 很少变化，使用缓存优化
 WORKDIR /tmp
-RUN git clone https://github.com/tsl0922/ttyd.git \
+RUN --mount=type=cache,target=/tmp/ttyd-cache \
+    git clone https://github.com/tsl0922/ttyd.git \
     && cd ttyd \
     && mkdir build \
     && cd build \
     && cmake .. \
-    && make \
+    && make -j$(nproc) \
     && make install
 
 # 安装 npm 包 - 使用固定版本，便于追踪和缓存
@@ -50,7 +51,7 @@ RUN --mount=type=cache,target=/root/.npm \
 WORKDIR /app
 
 # 最后复制脚本 - 变化最频繁的放最后
-COPY build.sh start.sh container-start.sh /app/
+COPY container-start.sh /app/
 RUN chmod +x /app/*.sh
 
 # 暴露端口 - 只暴露 ttyd，claude-code-router 通过内部访问
