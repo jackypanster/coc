@@ -40,21 +40,20 @@ RUN --mount=type=cache,target=/tmp/ttyd-cache \
     && make -j$(nproc) \
     && make install
 
-# 安装 npm 包 - 使用固定版本，便于追踪和缓存
+# 合并安装 npm 包 - 减少安装次数
 RUN --mount=type=cache,target=/root/.npm \
-    npm install -g @anthropic-ai/claude-code@${CLAUDE_CODE_VERSION}
-
-RUN --mount=type=cache,target=/root/.npm \
-    npm install -g @musistudio/claude-code-router@${CLAUDE_ROUTER_VERSION}
+    npm install -g \
+    @anthropic-ai/claude-code@${CLAUDE_CODE_VERSION} \
+    @musistudio/claude-code-router@${CLAUDE_ROUTER_VERSION}
 
 # 创建工作目录
 WORKDIR /app
 
 # 最后复制脚本 - 变化最频繁的放最后
 COPY container-start.sh /app/
-RUN chmod +x /app/*.sh
+RUN chmod +x /app/container-start.sh
 
 # 暴露端口 - 只暴露 ttyd，claude-code-router 通过内部访问
 EXPOSE 7681
 
-CMD ["/app/container-start.sh"]
+CMD ["bash", "/app/container-start.sh"]
