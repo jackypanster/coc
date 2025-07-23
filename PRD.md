@@ -10,3 +10,8 @@
 7. 容器内启动ttyd，端口7681，host 0.0.0.0
 8. 用户访问http://localhost:7681，即可访问ttyd
 9. 容器只是暴露ttyd，用户进入浏览器，通过ttyd进入容器，即可访问claude-code-router的web界面
+
+10. 把 .env 文件加入 .gitignore
+11. 把 .env 文件的 api_key 写入 config.json 里面
+12. 把当前目录config的拷贝到镜像里面的：~/.claude-code-router/config.json
+

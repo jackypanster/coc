@@ -6,10 +6,17 @@ source ./versions.env
 
 echo "🚀 开始构建 Docker 镜像 ${IMAGE_NAME}:${VERSION}..."
 
+# 检查配置文件
+if [ ! -f "config.json" ]; then
+    echo "❌ 未找到 config.json 文件"
+    echo "💡 请复制 config.json.example 为 config.json 并设置 API_KEY"
+    exit 1
+fi
+
 # 启用 BuildKit 以支持缓存挂载
 export DOCKER_BUILDKIT=1
 
-# 构建镜像，传递构建参数
+# 构建镜像
 docker build \
     --progress=plain \
     --build-arg CLAUDE_CODE_VERSION=${CLAUDE_CODE_VERSION} \

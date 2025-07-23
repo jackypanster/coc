@@ -49,7 +49,11 @@ RUN --mount=type=cache,target=/root/.npm \
 # 创建工作目录
 WORKDIR /app
 
-# 最后复制脚本 - 变化最频繁的放最后
+# 创建配置目录并复制配置文件
+RUN mkdir -p /root/.claude-code-router
+COPY config.json /root/.claude-code-router/config.json
+
+# 最后复制脚本
 COPY container-start.sh /app/
 RUN chmod +x /app/container-start.sh
 
