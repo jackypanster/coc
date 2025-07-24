@@ -34,3 +34,7 @@
 ### 6. 环境配置
 - 将当前目录的 `config` 拷贝到镜像中的 `~/.claude-code-router/config.json`
 
+### 7. 登录页面
+- 创建一个用户登录页面，用户登录后才能进入TTYD
+
+
