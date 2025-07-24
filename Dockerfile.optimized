@@ -1,0 +1,32 @@
+# 优化的 Dockerfile - 基于预构建的基础镜像
+# 注意：基础镜像标签将在构建时通过 --build-arg 传递
+ARG BASE_VERSION=v1.0.0
+FROM code-on-cloud-base:${BASE_VERSION}
+
+# 构建参数 - 由 build.sh 从 versions.env 传递
+ARG NODE_VERSION
+ARG CLAUDE_CODE_VERSION
+ARG CLAUDE_ROUTER_VERSION
+
+# 设置登录服务器 - 先复制package.json利用npm缓存
+COPY login/package.json /app/login/package.json
+RUN --mount=type=cache,target=/root/.npm \
+    cd /app/login && npm install
+
+# 复制登录服务器代码
+COPY login /app/login
+
+# 设置 Nginx 配置
+COPY login/nginx.conf /etc/nginx/nginx.conf
+
+# 复制配置文件
+COPY config.json /root/.claude-code-router/config.json
+
+# 复制启动脚本
+COPY container-start.sh /app/
+RUN chmod +x /app/container-start.sh
+
+# 暴露端口 - 现在暴露80端口给Nginx，ttyd通过内部访问
+EXPOSE 80
+
+CMD ["bash", "/app/container-start.sh"]
