@@ -191,11 +191,196 @@
         <!-- Code on Cloud Logo -->
         <div class="logo">CODE ON CLOUD</div>
         <div class="copyright">© PLATFORM TEAM</div>
-        <form action="/login" method="post">
-            <input type="text" name="username" placeholder="USERNAME" required>
-            <input type="password" name="password" placeholder="PASSWORD" required>
-            <button type="submit">[ ENTER ]</button>
-        </form>
+        
+        <!-- SSO Login Container -->
+        <div id="sso-container">
+            <div id="sso-status">正在加载企业SSO登录...</div>
+            <button id="sso-login-btn" onclick="openSSOLogin()">[ 企业SSO登录 ]</button>
+        </div>
     </div>
+    
+    <script>
+        // SSO配置（从后端获取）
+        let GFT_CONFIG = {
+            oauth_url: '',
+            client_id: '',
+            redirect_uri: '', // 从后端获取正确的重定向URI
+            theme: 'mini',
+            login_type: 'oa'
+        };
+        
+        // 从后端获取SSO配置
+        async function loadSSOConfig() {
+            try {
+                const response = await fetch('/login/config');
+                if (response.ok) {
+                    const config = await response.json();
+                    GFT_CONFIG.oauth_url = config.oauth_url;
+                    GFT_CONFIG.client_id = config.client_id;
+                    GFT_CONFIG.redirect_uri = config.redirect_uri; // 使用后端配置的重定向URI
+                    console.log('SSO配置加载成功:', {
+                        oauth_url: config.oauth_url,
+                        client_id: config.client_id,
+                        redirect_uri: config.redirect_uri
+                    });
+                    document.getElementById('sso-status').textContent = '点击按钮开始企业SSO登录';
+                } else {
+                    throw new Error('无法获取SSO配置');
+                }
+            } catch (error) {
+                console.error('SSO配置加载失败:', error);
+                document.getElementById('sso-status').textContent = 'SSO配置加载失败，请联系管理员';
+            }
+        }
+        
+        let loginFrame = null;
+        
+        // 打开企业SSO登录iframe
+        function openSSOLogin() {
+            if (loginFrame) {
+                document.body.removeChild(loginFrame);
+            }
+            
+            // 设置PostMessage监听器
+            const eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+            const eventer = window[eventMethod];
+            const messageEvent = eventMethod === "attachEvent" ? "onmessage" : "message";
+            
+            eventer(messageEvent, function(e) {
+                // 记录所有收到的消息以便调试
+                console.log('收到PostMessage:', {
+                    origin: e.origin,
+                    data: e.data,
+                    type: typeof e.data,
+                    source: e.source === loginFrame?.contentWindow ? 'loginFrame' : 'other'
+                });
+                
+                // 处理不同格式的消息
+                let code = null;
+                let state = null;
+                
+                // 情况1: e.data.url 包含认证码
+                if (e.data && e.data.url && e.data.url.indexOf("code=") > -1) {
+                    const redirectUrl = e.data.url;
+                    console.log('从 e.data.url 提取认证码:', redirectUrl);
+                    
+                    const urlParams = new URLSearchParams(redirectUrl.split('?')[1]);
+                    code = urlParams.get('code');
+                    state = urlParams.get('state');
+                }
+                // 情况2: e.data 直接包含 code
+                else if (e.data && e.data.code) {
+                    console.log('从 e.data 直接提取认证码:', e.data);
+                    code = e.data.code;
+                    state = e.data.state;
+                }
+                // 情况3: e.data 是字符串格式的URL
+                else if (typeof e.data === 'string' && e.data.indexOf('code=') > -1) {
+                    console.log('从字符串数据提取认证码:', e.data);
+                    const urlParams = new URLSearchParams(e.data.split('?')[1] || e.data);
+                    code = urlParams.get('code');
+                    state = urlParams.get('state');
+                }
+                
+                if (code) {
+                    console.log('成功提取认证码:', { code: code.substring(0, 10) + '...', state });
+                    
+                    // 关闭 iframe
+                    if (loginFrame && loginFrame.parentNode) {
+                        loginFrame.parentNode.removeChild(loginFrame);
+                        loginFrame = null;
+                    }
+                    
+                    // 提交认证码到后端
+                    submitAuthCode(code, state);
+                } else {
+                    console.log('未能从消息中提取到认证码');
+                }
+            }, false);
+            
+            // 创建iframe
+            loginFrame = document.createElement("iframe");
+            const ssoUrl = `${GFT_CONFIG.oauth_url}?theme=${GFT_CONFIG.theme}&login_type=${GFT_CONFIG.login_type}&client_id=${GFT_CONFIG.client_id}&redirect_uri=${encodeURIComponent(GFT_CONFIG.redirect_uri)}&state=login_${Date.now()}`;
+            
+            loginFrame.setAttribute("src", ssoUrl);
+            loginFrame.style.width = "604px";
+            loginFrame.style.height = "400px";
+            loginFrame.style.position = "fixed";
+            loginFrame.style.top = "50%";
+            loginFrame.style.left = "50%";
+            loginFrame.style.transform = "translate(-50%, -50%)";
+            loginFrame.style.zIndex = "9999";
+            loginFrame.style.border = "4px solid #bd93f9";
+            loginFrame.style.borderRadius = "8px";
+            loginFrame.style.boxShadow = "0 0 30px rgba(189, 147, 249, 0.3)";
+            loginFrame.style.backgroundColor = "#282a36";
+            
+            document.body.appendChild(loginFrame);
+            
+            document.getElementById('sso-status').textContent = '请在弹出窗口中完成登录...';
+        }
+        
+        // 提交认证码到后端
+        function submitAuthCode(code, state) {
+            document.getElementById('sso-status').textContent = '正在验证认证码...';
+            
+            const requestData = {
+                code: code,
+                state: state,
+                redirect_uri: GFT_CONFIG.redirect_uri
+            };
+            
+            console.log('发送SSO认证请求:', {
+                url: '/login/sso',
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: requestData,
+                codeLength: code ? code.length : 0,
+                codePreview: code ? code.substring(0, 10) + '...' : 'null'
+            });
+            
+            fetch('/login/sso', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestData)
+            })
+            .then(async response => {
+                console.log('SSO认证响应状态:', response.status);
+                
+                if (response.ok) {
+                    console.log('SSO认证成功，跳转到主页');
+                    document.getElementById('sso-status').textContent = '登录成功，正在跳转...';
+                    window.location.href = '/';
+                } else {
+                    // 获取详细错误信息
+                    const errorText = await response.text();
+                    console.error('SSO认证失败响应:', {
+                        status: response.status,
+                        statusText: response.statusText,
+                        body: errorText
+                    });
+                    throw new Error(`认证失败: ${response.status} - ${errorText}`);
+                }
+            })
+            .catch(error => {
+                console.error('SSO登录失败详细信息:', error);
+                document.getElementById('sso-status').textContent = `登录失败: ${error.message}`;
+                
+                // 关闭登录框
+                if (loginFrame && loginFrame.parentNode) {
+                    loginFrame.parentNode.removeChild(loginFrame);
+                    loginFrame = null;
+                }
+                alert('登录失败，请重试');
+            });
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSSOConfig();
+        });
+    </script>
 </body>
 </html>

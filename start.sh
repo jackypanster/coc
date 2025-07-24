@@ -1,5 +1,17 @@
 #!/bin/bash
 
+# 从versions.env加载镜像版本信息
+source versions.env
+
+# 加载本地.env文件中的环境变量
+if [ -f ".env" ]; then
+    echo "📋 Loading SSO configuration from .env file..."
+    export $(grep -v '^#' .env | grep -v '^$' | xargs)
+    echo "✅ Environment variables loaded"
+else
+    echo "⚠️  .env file not found, using system environment variables"
+fi
+
 set -e
 
 # 加载版本配置
@@ -25,7 +37,13 @@ fi
 docker run -d \
     --name ${CONTAINER_NAME} \
     -p 80:80 \
-    -v $(pwd):/workspace \
+    -v "$(pwd):/workspace" \
+    -e GFT_OAUTH_URL="${GFT_OAUTH_URL}" \
+    -e GFT_TOKEN_URL="${GFT_TOKEN_URL}" \
+    -e GFT_USERINFO_URL="${GFT_USERINFO_URL}" \
+    -e GFT_CLIENT_ID="${GFT_CLIENT_ID}" \
+    -e GFT_CLIENT_SECRET="${GFT_CLIENT_SECRET}" \
+    -e GFT_REDIRECT_URI="${GFT_REDIRECT_URI}" \
     --restart unless-stopped \
     ${IMAGE_NAME}:${VERSION}
 
