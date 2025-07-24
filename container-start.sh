@@ -8,5 +8,5 @@ TTYD_PID=$!
 sleep 2
 echo "✅ ttyd 已启动 (PID: $TTYD_PID) - http://localhost:7681"
 
-echo "🚀 启动 Cloud Code Dev 服务..."
+echo "🚀 启动 Coding Dev 服务..."
 ccr start
