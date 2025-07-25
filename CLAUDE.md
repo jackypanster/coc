@@ -10,12 +10,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Stop Container**: `docker stop cloud-code-dev`
 - **View Logs**: `docker logs cloud-code-dev`
 
-### Key Services
-- **ttyd Web Terminal**: Accessible at `http://localhost:7681`
-- **Cloud Code Dev**: Runs `ccr start` inside the container
+### Testing
+- **Run All Tests**: `docker exec cloud-code-dev npm test`
+- **Run Single Test**: `docker exec cloud-code-dev npm test -- --testNamePattern="<test-name>"`
+
+### Linting
+- **Type Check**: `docker exec cloud-code-dev npm run typecheck`
+- **Code Lint**: `docker exec cloud-code-dev npm run lint`
 
 ## High-Level Architecture
-- **Dockerized Environment**: Uses Debian base with Node.js `${NODE_VERSION}`
-- **ttyd Terminal**: Served on port 7681 with persistent session
-- **Dependency Versions**: Managed through `versions.env` for consistent builds
-- **Configuration**: `/root/.claude-code-router/config.json` mounted from host
+- **Dockerized Environment**: Debian base with Node.js `${NODE_VERSION}`
+- **ttyd Terminal**: Persistent web terminal at `http://localhost:7681`
+- **Dependency Versions**: Locked via `versions.env` for deterministic builds
+- **Configuration**: Mounted config at `/root/.claude-code-router/config.json`
+- **Service Structure**: Node.js application orchestrated with Docker Compose

@@ -75,6 +75,10 @@ COPY login/nginx.conf /etc/nginx/nginx.conf
 RUN mkdir -p /root/.claude-code-router
 COPY config.json /root/.claude-code-router/config.json
 
+# 复制环境变量配置文件（如果存在）
+COPY .env* /app/
+RUN if [ -f "/app/.env" ]; then echo "✅ .env file copied successfully"; else echo "⚠️  No .env file found, will use environment variables"; fi
+
 # 最后复制脚本
 COPY container-start.sh /app/
 RUN chmod +x /app/container-start.sh
