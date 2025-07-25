@@ -236,7 +236,7 @@
         
         let loginFrame = null;
         
-        // 打开企业SSO登录iframe
+        // 打开SSO登录iframe
         function openSSOLogin() {
             if (loginFrame) {
                 document.body.removeChild(loginFrame);
@@ -261,7 +261,7 @@
                 let code = null;
                 let state = null;
                 
-                // 主要格式: e.data.url 包含认证码（企业SSO标准格式）
+                // 主要格式: e.data.url 包含认证码（SSO标准格式）
                 if (e.data && e.data.url && e.data.url.indexOf("code=") > -1) {
                     const redirectUrl = e.data.url;
                     console.log('从 e.data.url 提取认证码，URL长度:', redirectUrl.length);

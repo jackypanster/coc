@@ -11,7 +11,7 @@ const port = 3000;
 
 
 
-// 企业SSO配置（从环境变量获取）
+// SSO配置（从环境变量获取）
 const GFT_CONFIG = {
     oauth_url: process.env.GFT_OAUTH_URL,
     token_url: process.env.GFT_TOKEN_URL,
