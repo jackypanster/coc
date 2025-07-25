@@ -194,8 +194,8 @@
         
         <!-- SSO Login Container -->
         <div id="sso-container">
-            <div id="sso-status">正在加载企业SSO登录...</div>
-            <button id="sso-login-btn" onclick="openSSOLogin()">[ 企业SSO登录 ]</button>
+            <div id="sso-status">正在加载SSO登录...</div>
+            <button id="sso-login-btn" onclick="openSSOLogin()">[ SSO登录 ]</button>
         </div>
     </div>
     
@@ -218,12 +218,13 @@
                     GFT_CONFIG.oauth_url = config.oauth_url;
                     GFT_CONFIG.client_id = config.client_id;
                     GFT_CONFIG.redirect_uri = config.redirect_uri; // 使用后端配置的重定向URI
+                    // 调试信息：隐藏敏感数据
                     console.log('SSO配置加载成功:', {
-                        oauth_url: config.oauth_url,
-                        client_id: config.client_id,
-                        redirect_uri: config.redirect_uri
+                        oauth_url: config.oauth_url ? config.oauth_url.substring(0, 20) + '****' + config.oauth_url.slice(-10) : 'null',
+                        client_id: config.client_id ? config.client_id.substring(0, 4) + '****' : 'null',
+                        redirect_uri: config.redirect_uri ? config.redirect_uri.substring(0, 15) + '****' + config.redirect_uri.slice(-15) : 'null'
                     });
-                    document.getElementById('sso-status').textContent = '点击按钮开始企业SSO登录';
+                    document.getElementById('sso-status').textContent = '点击按钮开始SSO登录';
                 } else {
                     throw new Error('无法获取SSO配置');
                 }
@@ -247,39 +248,33 @@
             const messageEvent = eventMethod === "attachEvent" ? "onmessage" : "message";
             
             eventer(messageEvent, function(e) {
-                // 记录所有收到的消息以便调试
+                // 调试信息：隐藏敏感数据
                 console.log('收到PostMessage:', {
                     origin: e.origin,
-                    data: e.data,
-                    type: typeof e.data,
+                    dataType: typeof e.data,
+                    hasUrl: e.data && e.data.url ? 'yes' : 'no',
+                    hasCode: e.data && e.data.code ? 'yes' : 'no',
                     source: e.source === loginFrame?.contentWindow ? 'loginFrame' : 'other'
                 });
                 
-                // 处理不同格式的消息
+                // 简化消息处理逻辑
                 let code = null;
                 let state = null;
                 
-                // 情况1: e.data.url 包含认证码
+                // 主要格式: e.data.url 包含认证码（企业SSO标准格式）
                 if (e.data && e.data.url && e.data.url.indexOf("code=") > -1) {
                     const redirectUrl = e.data.url;
-                    console.log('从 e.data.url 提取认证码:', redirectUrl);
+                    console.log('从 e.data.url 提取认证码，URL长度:', redirectUrl.length);
                     
                     const urlParams = new URLSearchParams(redirectUrl.split('?')[1]);
                     code = urlParams.get('code');
                     state = urlParams.get('state');
                 }
-                // 情况2: e.data 直接包含 code
+                // 备用格式: e.data 直接包含 code
                 else if (e.data && e.data.code) {
-                    console.log('从 e.data 直接提取认证码:', e.data);
+                    console.log('从 e.data 直接提取认证码');
                     code = e.data.code;
                     state = e.data.state;
-                }
-                // 情况3: e.data 是字符串格式的URL
-                else if (typeof e.data === 'string' && e.data.indexOf('code=') > -1) {
-                    console.log('从字符串数据提取认证码:', e.data);
-                    const urlParams = new URLSearchParams(e.data.split('?')[1] || e.data);
-                    code = urlParams.get('code');
-                    state = urlParams.get('state');
                 }
                 
                 if (code) {
@@ -330,13 +325,15 @@
                 redirect_uri: GFT_CONFIG.redirect_uri
             };
             
+            // 调试信息：隐藏敏感数据
             console.log('发送SSO认证请求:', {
                 url: '/login/sso',
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: requestData,
                 codeLength: code ? code.length : 0,
-                codePreview: code ? code.substring(0, 10) + '...' : 'null'
+                codePreview: code ? code.substring(0, 8) + '****' + code.slice(-4) : 'null',
+                statePreview: state ? state.substring(0, 10) + '****' : 'null',
+                redirectUriPreview: requestData.redirect_uri ? requestData.redirect_uri.substring(0, 15) + '****' + requestData.redirect_uri.slice(-10) : 'null'
             });
             
             fetch('/login/sso', {
@@ -351,8 +348,17 @@
                 
                 if (response.ok) {
                     console.log('SSO认证成功，跳转到主页');
+                    console.log('DEBUG: 响应内容:', response);
+                    console.log('DEBUG: 当前域名:', window.location.hostname);
+                    console.log('DEBUG: 当前URL:', window.location.href);
+                    
                     document.getElementById('sso-status').textContent = '登录成功，正在跳转...';
-                    window.location.href = '/';
+                    
+                    // 简化跳转逻辑：直接跳转到主页
+                    console.log('DEBUG: 正在跳转到主页...');
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 500); // 短暂延迟确保Cookie设置完成
                 } else {
                     // 获取详细错误信息
                     const errorText = await response.text();
