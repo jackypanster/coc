@@ -1,7 +1,11 @@
+const path = require('path');
+
+// 加载环境变量（从当前目录的.env文件）
+require('dotenv').config({ path: path.join(__dirname, '.env') });
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const path = require('path');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const axios = require('axios');
 const crypto = require('crypto');

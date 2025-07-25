@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# Load environment variables if .env file exists
-if [ -f "/app/.env" ]; then
-    echo "📋 Loading environment variables from .env file..."
+# Load environment variables from login/.env file
+if [ -f "/app/login/.env" ]; then
+    echo "📋 Loading SSO configuration from /app/login/.env..."
     # More robust way to load .env file
     set -a  # automatically export all variables
-    source /app/.env
+    source /app/login/.env
     set +a  # disable automatic export
-    echo "✅ .env file loaded successfully"
+    echo "✅ SSO configuration loaded successfully"
 else
-    echo "⚠️  .env file not found at /app/.env, using environment variables"
+    echo "⚠️  .env file not found at /app/login/.env, using environment variables"
 fi
 
 # Debug: Show current environment variables (without secrets)

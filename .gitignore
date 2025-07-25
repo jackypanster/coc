@@ -26,6 +26,8 @@ yarn-error.log*
 
 # 环境变量文件
 .env
+login/.env
+login/.env.example
 
 # 配置文件（包含敏感信息）
 config.json*
@@ -37,6 +39,9 @@ config.json*
 # 构建产物
 dist/
 build/
+
+# 发布目录（包含企业制品库脚本）
+release/
 
 # 系统文件
 .DS_Store
