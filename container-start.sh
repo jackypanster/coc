@@ -1,40 +1,53 @@
 #!/bin/bash
 
+# 设置认证模式（默认为sso）
+export AUTH_PROVIDER=${AUTH_PROVIDER:-sso}
+echo "🔐 认证模式: $AUTH_PROVIDER"
+
 # Load environment variables from login/.env file
 if [ -f "/app/login/.env" ]; then
-    echo "📋 Loading SSO configuration from /app/login/.env..."
+    echo "📋 Loading configuration from /app/login/.env..."
     # More robust way to load .env file
     set -a  # automatically export all variables
     source /app/login/.env
     set +a  # disable automatic export
-    echo "✅ SSO configuration loaded successfully"
+    echo "✅ Configuration loaded successfully"
 else
     echo "⚠️  .env file not found at /app/login/.env, using environment variables"
 fi
 
-# Debug: Show current environment variables (without secrets)
-echo "🔍 Current SSO configuration:"
-echo "- GFT_OAUTH_URL: ${GFT_OAUTH_URL:-'not set'}"
-echo "- GFT_CLIENT_ID: ${GFT_CLIENT_ID:-'not set'}"
-echo "- GFT_CLIENT_SECRET: ${GFT_CLIENT_SECRET:+'***set***'}"
-
-# Validate required SSO configuration
-if [ -z "$GFT_CLIENT_ID" ] || [ -z "$GFT_CLIENT_SECRET" ]; then
-    echo "❌ Error: Missing required SSO configuration"
-    echo "Please set the following environment variables:"
-    echo "- GFT_CLIENT_ID: SSO application ID"
-    echo "- GFT_CLIENT_SECRET: SSO application secret"
-    echo "- GFT_OAUTH_URL: SSO login URL (optional, has default)"
-    echo "- GFT_TOKEN_URL: SSO token exchange URL (optional, has default)"
-    echo "- GFT_USERINFO_URL: SSO user info URL (optional, has default)"
-    echo ""
-    echo "You can either:"
-    echo "1. Set environment variables when running docker"
-    echo "2. Create a .env file in the project root"
-    exit 1
+# 根据认证模式进行不同的配置验证
+if [ "$AUTH_PROVIDER" = "sso" ]; then
+    # SSO模式：验证必要的配置
+    echo "🔍 Current SSO configuration:"
+    echo "- GFT_OAUTH_URL: ${GFT_OAUTH_URL:-'not set'}"
+    echo "- GFT_CLIENT_ID: ${GFT_CLIENT_ID:-'not set'}"
+    echo "- GFT_CLIENT_SECRET: ${GFT_CLIENT_SECRET:+'***set***'}"
+    
+    if [ -z "$GFT_CLIENT_ID" ] || [ -z "$GFT_CLIENT_SECRET" ]; then
+        echo "❌ Error: Missing required SSO configuration"
+        echo "Please set the following environment variables:"
+        echo "- GFT_CLIENT_ID: SSO application ID"
+        echo "- GFT_CLIENT_SECRET: SSO application secret"
+        echo "- GFT_OAUTH_URL: SSO login URL (optional, has default)"
+        echo "- GFT_TOKEN_URL: SSO token exchange URL (optional, has default)"
+        echo "- GFT_USERINFO_URL: SSO user info URL (optional, has default)"
+        echo ""
+        echo "You can either:"
+        echo "1. Set environment variables when running docker"
+        echo "2. Create a .env file in the project root"
+        echo "3. Use AUTH_PROVIDER=local for development mode"
+        exit 1
+    fi
+    echo "✅ SSO configuration validated: Client ID = $GFT_CLIENT_ID"
+elif [ "$AUTH_PROVIDER" = "local" ]; then
+    # 本地模式：无需特殊配置
+    echo "🔧 本地开发认证模式已启用"
+    echo "⚠️  警告：此模式仅用于开发环境"
+else
+    echo "⚠️  未知的认证模式: $AUTH_PROVIDER"
+    echo "支持的模式: sso, local"
 fi
-
-echo "✅ SSO configuration validated: Client ID = $GFT_CLIENT_ID"
 
 # Start ttyd in the background, listening on a local-only port
 # 设计理念：容器提供工具环境，用户代码在主机，通过/workspace挂载访问
