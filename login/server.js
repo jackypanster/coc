@@ -53,31 +53,15 @@ providerRoutes.forEach(route => {
 // 认证中间件（必须在认证路由之后）
 app.use(authManager.getMiddleware());
 
-// 创建ttyd代理
+// 创建简单的ttyd代理 - 认证成功后，所有请求代理到ttyd
 const ttydProxy = createProxyMiddleware({
     target: 'http://127.0.0.1:7681',
     changeOrigin: true,
-    ws: true, // 启用WebSocket代理
-    onProxyReq: (proxyReq, req, res) => {
-        // 传递用户信息到ttyd
-        if (req.user) {
-            if (req.user.name) {
-                try {
-                    const encodedName = encodeURIComponent(req.user.name);
-                    proxyReq.setHeader('X-WEBAUTH-USER', encodedName);
-                } catch (e) {
-                    proxyReq.setHeader('X-WEBAUTH-USER', 'authenticated-user');
-                }
-            } else {
-                proxyReq.setHeader('X-WEBAUTH-USER', 'authenticated-user');
-            }
-        } else {
-            proxyReq.setHeader('X-WEBAUTH-USER', 'anonymous');
-        }
-    }
+    ws: true, // 自动处理WebSocket
+    logLevel: 'info'
 });
 
-// 全局代理路由，在认证中间件之后应用
+// 所有请求都代理到ttyd（已通过认证中间件）
 app.use('/', ttydProxy);
 
 // 启动服务器

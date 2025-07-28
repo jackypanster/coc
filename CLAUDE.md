@@ -3,7 +3,7 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
-Code on Cloud (CoC) is a containerized development environment providing a web-based terminal (ttyd) with SSO authentication and Claude Code integration.
+Code on Cloud (CoC) is a containerized development environment providing a web-based terminal with tmux session management, xterm.js frontend, SSO authentication and Claude Code integration.
 
 ## Common Commands
 
@@ -38,13 +38,19 @@ npm test
 # Claude Code commands
 claude
 claude-code-router
+
+# tmux commands (Ctrl+A is prefix)
+Ctrl+A | # Split vertical
+Ctrl+A - # Split horizontal  
+Ctrl+A c # New window
+Ctrl+A n # Next window
 ```
 
 ## Architecture
 
 ### Container Structure
 - **Multi-stage Docker build** for optimization:
-  - `Dockerfile.base`: Stable dependencies (Node.js, Python, tools)
+  - `Dockerfile.base`: Stable dependencies (Node.js, Python, tools, tmux)
   - `Dockerfile.optimized`: Application layer
   - Base image cached at `registry.cn-beijing.aliyuncs.com/zhibinpan/coc-base:latest`
 
@@ -60,13 +66,16 @@ claude-code-router
 1. User accesses web terminal → Nginx checks authentication
 2. Unauthenticated → Redirect to login page
 3. Authentication via selected provider (SSO/Local/Custom)
-4. Session cookie set → Access granted to ttyd terminal
+4. Session cookie set → Access granted to terminal (xterm.js + tmux)
 
 ### Key Components
 - **Login Server** (`login/server.js`): Express app with pluggable auth
 - **Auth Providers** (`login/auth-providers/`): Modular authentication implementations
 - **Nginx** (`login/nginx.conf`): Reverse proxy routing and auth enforcement
-- **ttyd**: Web terminal server running on port 7681
+- **Terminal Stack**:
+  - **xterm.js**: Frontend terminal emulator in `login/terminal.html`
+  - **ttyd**: WebSocket terminal server on port 7681
+  - **tmux**: Session management with persistence
 - **Session Management**: Configurable per auth provider
 
 ## Configuration
@@ -79,8 +88,10 @@ claude-code-router
 
 ### Important Files
 - `login/server.js`: Main server with authentication hooks
+- `login/terminal.html`: xterm.js based terminal interface
 - `login/auth-provider.js`: Authentication provider interface
 - `login/auth-manager.js`: Authentication management system
+- `tmux.conf`: tmux configuration for development
 - `login/auth-providers/`: Authentication implementations (SSO, Local, etc.)
 - `doc/auth-provider-guide.md`: Guide for creating custom auth providers
 - `doc/sso-integration.md`: SSO setup guide

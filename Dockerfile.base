@@ -11,6 +11,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV NODE_VERSION=${NODE_VERSION}
 ENV CLAUDE_CODE_VERSION=${CLAUDE_CODE_VERSION}
 ENV CLAUDE_ROUTER_VERSION=${CLAUDE_ROUTER_VERSION}
+# 设置 locale 支持中文
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
 
 # 配置APT镜像源以加速下载
 RUN echo 'deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm main contrib non-free non-free-firmware' > /etc/apt/sources.list && \
@@ -48,7 +51,15 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     tree \
     unzip \
     zip \
-    jq
+    jq \
+    # 终端多路复用器 \
+    tmux \
+    # 中文支持 \
+    locales
+
+# 生成中文 locale
+RUN sed -i '/zh_CN.UTF-8/s/^# //g' /etc/locale.gen && \
+    locale-gen
 
 # 安装 Node.js - 很少变化，使用缓存加速
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
