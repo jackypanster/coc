@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code on Cloud - Login</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #282a36 0%, #44475a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Press Start 2P', monospace;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* 像素化背景动画 */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25px 25px, #0f3460 2px, transparent 2px),
+                radial-gradient(circle at 75px 75px, #0f3460 1px, transparent 1px);
+            background-size: 100px 100px;
+            opacity: 0.3;
+            animation: pixelMove 20s linear infinite;
+        }
+        
+        @keyframes pixelMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(100px, 100px); }
+        }
+        
+        .login-container {
+            background: #282a36;
+            padding: 5rem 4rem;
+            border: 4px solid #bd93f9;
+            box-shadow: 
+                0 0 0 2px #282a36,
+                0 0 0 6px #bd93f9,
+                0 0 30px rgba(189, 147, 249, 0.2),
+                inset 0 0 30px rgba(189, 147, 249, 0.05);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            min-width: 600px;
+            max-width: 800px;
+        }
+        
+        /* Code on Cloud Logo */
+        .logo {
+            font-size: 44px;
+            color: #bd93f9;
+            margin-bottom: 1rem;
+            text-shadow: 
+                2px 2px 0px #8be9fd,
+                4px 4px 0px #6272a4;
+            letter-spacing: 6px;
+            animation: glow 3s ease-in-out infinite alternate;
+            line-height: 1.2;
+        }
+        
+        /* Copyright */
+        .copyright {
+            font-size: 8px;
+            color: #6272a4;
+            margin-bottom: 3rem;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 
+                    2px 2px 0px #8be9fd,
+                    4px 4px 0px #6272a4,
+                    0 0 15px #bd93f9;
+            }
+            to {
+                text-shadow: 
+                    2px 2px 0px #8be9fd,
+                    4px 4px 0px #6272a4,
+                    0 0 25px #bd93f9,
+                    0 0 35px #bd93f9;
+            }
+        }
+        
+        h1 {
+            display: none;
+        }
+        
+        input {
+            width: 100%;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            border: 3px solid #44475a;
+            background-color: #44475a;
+            color: #f8f8f2;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 11px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        input:focus {
+            border-color: #bd93f9;
+            box-shadow: 0 0 10px rgba(189, 147, 249, 0.4);
+            background-color: #282a36;
+        }
+        
+        input::placeholder {
+            color: #6272a4;
+            opacity: 1;
+        }
+        
+        button {
+            width: 100%;
+            padding: 1.2rem;
+            border: 3px solid #bd93f9;
+            background-color: #282a36;
+            color: #bd93f9;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        button:hover {
+            background-color: #bd93f9;
+            color: #282a36;
+            box-shadow: 0 0 15px rgba(189, 147, 249, 0.4);
+        }
+        
+        button:active {
+            transform: scale(0.98);
+        }
+        
+        /* 像素化装饰元素 */
+        .pixel-corner {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #bd93f9;
+        }
+        
+        .pixel-corner.top-left {
+            top: -2px;
+            left: -2px;
+        }
+        
+        .pixel-corner.top-right {
+            top: -2px;
+            right: -2px;
+        }
+        
+        .pixel-corner.bottom-left {
+            bottom: -2px;
+            left: -2px;
+        }
+        
+        .pixel-corner.bottom-right {
+            bottom: -2px;
+            right: -2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <!-- 像素化装饰角落 -->
+        <div class="pixel-corner top-left"></div>
+        <div class="pixel-corner top-right"></div>
+        <div class="pixel-corner bottom-left"></div>
+        <div class="pixel-corner bottom-right"></div>
+        
+        <!-- Code on Cloud Logo -->
+        <div class="logo">CODE ON CLOUD</div>
+        <div class="copyright">© PLATFORM TEAM</div>
+        
+        <!-- SSO Login Container -->
+        <div id="sso-container">
+            <div id="sso-status">正在加载SSO登录...</div>
+            <button id="sso-login-btn" onclick="openSSOLogin()">[ SSO登录 ]</button>
+        </div>
+    </div>
+    
+    <script>
+        // SSO配置（从后端获取）
+        let GFT_CONFIG = {
+            oauth_url: '',
+            client_id: '',
+            redirect_uri: '', // 从后端获取正确的重定向URI
+            theme: 'mini',
+            login_type: 'oa'
+        };
+        
+        // 从后端获取SSO配置
+        async function loadSSOConfig() {
+            try {
+                const response = await fetch('/login/config');
+                if (response.ok) {
+                    const config = await response.json();
+                    GFT_CONFIG.oauth_url = config.oauth_url;
+                    GFT_CONFIG.client_id = config.client_id;
+                    GFT_CONFIG.redirect_uri = config.redirect_uri; // 使用后端配置的重定向URI
+                    // 调试信息：隐藏敏感数据
+                    console.log('SSO配置加载成功:', {
+                        oauth_url: config.oauth_url ? config.oauth_url.substring(0, 20) + '****' + config.oauth_url.slice(-10) : 'null',
+                        client_id: config.client_id ? config.client_id.substring(0, 4) + '****' : 'null',
+                        redirect_uri: config.redirect_uri ? config.redirect_uri.substring(0, 15) + '****' + config.redirect_uri.slice(-15) : 'null'
+                    });
+                    document.getElementById('sso-status').textContent = '点击按钮开始SSO登录';
+                } else {
+                    throw new Error('无法获取SSO配置');
+                }
+            } catch (error) {
+                console.error('SSO配置加载失败:', error);
+                document.getElementById('sso-status').textContent = 'SSO配置加载失败，请联系管理员';
+            }
+        }
+        
+        let loginFrame = null;
+        
+        // 打开SSO登录iframe
+        function openSSOLogin() {
+            if (loginFrame) {
+                document.body.removeChild(loginFrame);
+            }
+            
+            // 设置PostMessage监听器
+            const eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+            const eventer = window[eventMethod];
+            const messageEvent = eventMethod === "attachEvent" ? "onmessage" : "message";
+            
+            eventer(messageEvent, function(e) {
+                // 调试信息：隐藏敏感数据
+                console.log('收到PostMessage:', {
+                    origin: e.origin,
+                    dataType: typeof e.data,
+                    hasUrl: e.data && e.data.url ? 'yes' : 'no',
+                    hasCode: e.data && e.data.code ? 'yes' : 'no',
+                    source: e.source === loginFrame?.contentWindow ? 'loginFrame' : 'other'
+                });
+                
+                // 简化消息处理逻辑
+                let code = null;
+                let state = null;
+                
+                // 主要格式: e.data.url 包含认证码（SSO标准格式）
+                if (e.data && e.data.url && e.data.url.indexOf("code=") > -1) {
+                    const redirectUrl = e.data.url;
+                    console.log('从 e.data.url 提取认证码，URL长度:', redirectUrl.length);
+                    
+                    const urlParams = new URLSearchParams(redirectUrl.split('?')[1]);
+                    code = urlParams.get('code');
+                    state = urlParams.get('state');
+                }
+                // 备用格式: e.data 直接包含 code
+                else if (e.data && e.data.code) {
+                    console.log('从 e.data 直接提取认证码');
+                    code = e.data.code;
+                    state = e.data.state;
+                }
+                
+                if (code) {
+                    console.log('成功提取认证码:', { code: code.substring(0, 10) + '...', state });
+                    
+                    // 关闭 iframe
+                    if (loginFrame && loginFrame.parentNode) {
+                        loginFrame.parentNode.removeChild(loginFrame);
+                        loginFrame = null;
+                    }
+                    
+                    // 提交认证码到后端
+                    submitAuthCode(code, state);
+                } else {
+                    console.log('未能从消息中提取到认证码');
+                }
+            }, false);
+            
+            // 创建iframe
+            loginFrame = document.createElement("iframe");
+            const ssoUrl = `${GFT_CONFIG.oauth_url}?theme=${GFT_CONFIG.theme}&login_type=${GFT_CONFIG.login_type}&client_id=${GFT_CONFIG.client_id}&redirect_uri=${encodeURIComponent(GFT_CONFIG.redirect_uri)}&state=login_${Date.now()}`;
+            
+            loginFrame.setAttribute("src", ssoUrl);
+            loginFrame.style.width = "604px";
+            loginFrame.style.height = "400px";
+            loginFrame.style.position = "fixed";
+            loginFrame.style.top = "50%";
+            loginFrame.style.left = "50%";
+            loginFrame.style.transform = "translate(-50%, -50%)";
+            loginFrame.style.zIndex = "9999";
+            loginFrame.style.border = "4px solid #bd93f9";
+            loginFrame.style.borderRadius = "8px";
+            loginFrame.style.boxShadow = "0 0 30px rgba(189, 147, 249, 0.3)";
+            loginFrame.style.backgroundColor = "#282a36";
+            
+            document.body.appendChild(loginFrame);
+            
+            document.getElementById('sso-status').textContent = '请在弹出窗口中完成登录...';
+        }
+        
+        // 提交认证码到后端
+        function submitAuthCode(code, state) {
+            document.getElementById('sso-status').textContent = '正在验证认证码...';
+            
+            const requestData = {
+                code: code,
+                state: state,
+                redirect_uri: GFT_CONFIG.redirect_uri
+            };
+            
+            // 调试信息：隐藏敏感数据
+            console.log('发送SSO认证请求:', {
+                url: '/login/sso',
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                codeLength: code ? code.length : 0,
+                codePreview: code ? code.substring(0, 8) + '****' + code.slice(-4) : 'null',
+                statePreview: state ? state.substring(0, 10) + '****' : 'null',
+                redirectUriPreview: requestData.redirect_uri ? requestData.redirect_uri.substring(0, 15) + '****' + requestData.redirect_uri.slice(-10) : 'null'
+            });
+            
+            fetch('/login/sso', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestData)
+            })
+            .then(async response => {
+                console.log('SSO认证响应状态:', response.status);
+                
+                if (response.ok) {
+                    console.log('SSO认证成功，跳转到主页');
+                    console.log('DEBUG: 响应内容:', response);
+                    console.log('DEBUG: 当前域名:', window.location.hostname);
+                    console.log('DEBUG: 当前URL:', window.location.href);
+                    
+                    document.getElementById('sso-status').textContent = '登录成功，正在跳转...';
+                    
+                    // 简化跳转逻辑：直接跳转到主页
+                    console.log('DEBUG: 正在跳转到主页...');
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 500); // 短暂延迟确保Cookie设置完成
+                } else {
+                    // 获取详细错误信息
+                    const errorText = await response.text();
+                    console.error('SSO认证失败响应:', {
+                        status: response.status,
+                        statusText: response.statusText,
+                        body: errorText
+                    });
+                    throw new Error(`认证失败: ${response.status} - ${errorText}`);
+                }
+            })
+            .catch(error => {
+                console.error('SSO登录失败详细信息:', error);
+                document.getElementById('sso-status').textContent = `登录失败: ${error.message}`;
+                
+                // 关闭登录框
+                if (loginFrame && loginFrame.parentNode) {
+                    loginFrame.parentNode.removeChild(loginFrame);
+                    loginFrame = null;
+                }
+                alert('登录失败，请重试');
+            });
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSSOConfig();
+        });
+    </script>
+</body>
+</html>

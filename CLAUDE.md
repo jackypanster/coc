@@ -18,8 +18,11 @@ Code on Cloud (CoC) is a containerized development environment providing a web-b
 # Full rebuild (base + application)
 ./build-full.sh
 
-# Start the container (mounts current directory to /workspace)
-./start.sh
+# Start with local authentication (development)
+AUTH_PROVIDER=local ./start.sh
+
+# Start with SSO authentication (production)
+./start.sh  # defaults to SSO
 ```
 
 ### Development Inside Container
@@ -45,29 +48,42 @@ claude-code-router
   - `Dockerfile.optimized`: Application layer
   - Base image cached at `registry.cn-beijing.aliyuncs.com/zhibinpan/coc-base:latest`
 
+### Authentication System (Pluggable)
+- **AuthProvider Interface**: Base class for all authentication implementations
+- **AuthManager**: Loads and manages authentication providers
+- **Authentication Modes**:
+  - `AUTH_PROVIDER=sso`: Enterprise SSO (OAuth2.0) - Production
+  - `AUTH_PROVIDER=local`: Local development mode - Any username/password
+  - Custom providers can be added in `login/auth-providers/`
+
 ### Authentication Flow
 1. User accesses web terminal → Nginx checks authentication
-2. Unauthenticated → Redirect to login page (pixel-art UI)
-3. SSO authentication via iframe and PostMessage
+2. Unauthenticated → Redirect to login page
+3. Authentication via selected provider (SSO/Local/Custom)
 4. Session cookie set → Access granted to ttyd terminal
 
 ### Key Components
-- **Login Server** (`login/server.js`): Express app handling SSO OAuth2.0 flow
+- **Login Server** (`login/server.js`): Express app with pluggable auth
+- **Auth Providers** (`login/auth-providers/`): Modular authentication implementations
 - **Nginx** (`login/nginx.conf`): Reverse proxy routing and auth enforcement
 - **ttyd**: Web terminal server running on port 7681
-- **Session Management**: 12-hour max session, 1-hour inactivity timeout
+- **Session Management**: Configurable per auth provider
 
 ## Configuration
 
 ### Environment Variables
-- SSO credentials: Set in `.env` file (CLIENT_ID, CLIENT_SECRET, DOMAIN)
+- Authentication mode: `AUTH_PROVIDER=sso|local` (default: sso)
+- SSO credentials: Set in `.env` file (GFT_CLIENT_ID, GFT_CLIENT_SECRET)
 - Versions: Managed in `versions.env` (NODE_VERSION, CLAUDE_VERSION, etc.)
 - Claude Code Router: Configure in `config.json`
 
 ### Important Files
-- `login/server.js`: Authentication logic and session management
-- `login/login.html`: SSO integration UI
-- `sso-integration.md`: Complete SSO setup guide
+- `login/server.js`: Main server with authentication hooks
+- `login/auth-provider.js`: Authentication provider interface
+- `login/auth-manager.js`: Authentication management system
+- `login/auth-providers/`: Authentication implementations (SSO, Local, etc.)
+- `doc/auth-provider-guide.md`: Guide for creating custom auth providers
+- `doc/sso-integration.md`: SSO setup guide
 - `versions.env`: Component version management
 
 ## Testing and Debugging
