@@ -58,7 +58,8 @@ echo "📝 This design keeps container lightweight and data persistent"
 
 # 在/workspace启动ttyd，使用-w参数明确设置工作目录
 # 监听所有接口以支持不同域名访问（localhost, 127.0.0.1, 自定义域名）
-ttyd --port 7681 --interface 0.0.0.0 --writable -w /workspace bash &
+# 使用tmux提供会话管理功能
+ttyd --port 7681 --interface 0.0.0.0 --writable -w /workspace tmux new -A -s main &
 TTYD_PID=$!
 sleep 2
 echo "✅ ttyd is running (PID: $TTYD_PID) on port 7681"
