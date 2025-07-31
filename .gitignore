@@ -51,3 +51,6 @@ release/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# 测试结果目录
+test-results/

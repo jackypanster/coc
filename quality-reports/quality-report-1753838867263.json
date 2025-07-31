@@ -1,0 +1,2325 @@
+{
+  "timestamp": "2025-07-30T01:27:08.341Z",
+  "complexity": {
+    "totalFiles": 5,
+    "issues": {
+      "complexity": 1,
+      "longFunctions": 1,
+      "tooManyParams": 0,
+      "deepNesting": 0
+    },
+    "details": [
+      {
+        "file": "/Users/zhibinpan/workspace/coc/login/auth-manager.js",
+        "issues": [
+          {
+            "rule": "no-unused-vars",
+            "line": 1,
+            "message": "'path' is assigned a value but never used."
+          },
+          {
+            "rule": "no-unused-vars",
+            "line": 2,
+            "message": "'crypto' is assigned a value but never used."
+          },
+          {
+            "rule": "indent",
+            "line": 9,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 10,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 11,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 12,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 14,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 15,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 16,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 18,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 21,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 22,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 24,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 25,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 26,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 27,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 28,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 30,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 31,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 32,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 34,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 35,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 36,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 37,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 38,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 39,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 40,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 41,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 42,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 43,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 44,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 46,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 49,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 50,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 51,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 52,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 53,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 54,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 55,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 56,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 57,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 58,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 59,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 61,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 64,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 65,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 66,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 67,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 68,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 69,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 70,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 71,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 72,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 73,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 74,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 76,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 79,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 80,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 81,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 82,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 83,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 85,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 86,
+            "message": "Expected indentation of 10 spaces but found 20."
+          },
+          {
+            "rule": "indent",
+            "line": 87,
+            "message": "Expected indentation of 10 spaces but found 20."
+          },
+          {
+            "rule": "indent",
+            "line": 89,
+            "message": "Expected indentation of 10 spaces but found 20."
+          },
+          {
+            "rule": "indent",
+            "line": 90,
+            "message": "Expected indentation of 10 spaces but found 20."
+          },
+          {
+            "rule": "indent",
+            "line": 91,
+            "message": "Expected indentation of 12 spaces but found 24."
+          },
+          {
+            "rule": "indent",
+            "line": 92,
+            "message": "Expected indentation of 12 spaces but found 24."
+          },
+          {
+            "rule": "indent",
+            "line": 93,
+            "message": "Expected indentation of 12 spaces but found 24."
+          },
+          {
+            "rule": "indent",
+            "line": 94,
+            "message": "Expected indentation of 12 spaces but found 24."
+          },
+          {
+            "rule": "comma-dangle",
+            "line": 94,
+            "message": "Missing trailing comma."
+          },
+          {
+            "rule": "indent",
+            "line": 95,
+            "message": "Expected indentation of 10 spaces but found 20."
+          },
+          {
+            "rule": "indent",
+            "line": 97,
+            "message": "Expected indentation of 10 spaces but found 20."
+          },
+          {
+            "rule": "indent",
+            "line": 98,
+            "message": "Expected indentation of 10 spaces but found 20."
+          },
+          {
+            "rule": "indent",
+            "line": 99,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 100,
+            "message": "Expected indentation of 10 spaces but found 20."
+          },
+          {
+            "rule": "indent",
+            "line": 101,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 102,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 103,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 104,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 105,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 106,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 107,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 109,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 112,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 113,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "consistent-return",
+            "line": 113,
+            "message": "Expected to return a value at the end of async arrow function."
+          },
+          {
+            "rule": "indent",
+            "line": 114,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 115,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 116,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 117,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 119,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 121,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 122,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 124,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 125,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 127,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 128,
+            "message": "Expected indentation of 10 spaces but found 20."
+          },
+          {
+            "rule": "indent",
+            "line": 129,
+            "message": "Expected indentation of 10 spaces but found 20."
+          },
+          {
+            "rule": "indent",
+            "line": 130,
+            "message": "Expected indentation of 10 spaces but found 20."
+          },
+          {
+            "rule": "indent",
+            "line": 131,
+            "message": "Expected indentation of 10 spaces but found 20."
+          },
+          {
+            "rule": "indent",
+            "line": 132,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "no-else-return",
+            "line": 132,
+            "message": "Unnecessary 'else' after 'return'."
+          },
+          {
+            "rule": "indent",
+            "line": 133,
+            "message": "Expected indentation of 10 spaces but found 20."
+          },
+          {
+            "rule": "indent",
+            "line": 134,
+            "message": "Expected indentation of 10 spaces but found 20."
+          },
+          {
+            "rule": "indent",
+            "line": 135,
+            "message": "Expected indentation of 10 spaces but found 20."
+          },
+          {
+            "rule": "indent",
+            "line": 136,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 137,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 139,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 140,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 141,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 142,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 143,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 145,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 148,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 149,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 150,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 152,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 153,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 155,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 156,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 158,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 159,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 160,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 162,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 163,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 164,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 165,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 167,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 170,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 171,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 172,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 174,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 177,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 178,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 179,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 181,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 182,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 183,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 184,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "comma-dangle",
+            "line": 184,
+            "message": "Missing trailing comma."
+          },
+          {
+            "rule": "indent",
+            "line": 185,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 187,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 188,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 190,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 193,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 194,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 195,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 197,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 198,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 200,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 201,
+            "message": "Expected indentation of 10 spaces but found 20."
+          },
+          {
+            "rule": "indent",
+            "line": 202,
+            "message": "Expected indentation of 10 spaces but found 20."
+          },
+          {
+            "rule": "indent",
+            "line": 203,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 204,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 206,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 207,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 208,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 209,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 210,
+            "message": "Expected indentation of 2 spaces but found 4."
+          }
+        ]
+      },
+      {
+        "file": "/Users/zhibinpan/workspace/coc/login/auth-provider.js",
+        "issues": [
+          {
+            "rule": "indent",
+            "line": 6,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 7,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 8,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 10,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 14,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 15,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 16,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 18,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 22,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 23,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 24,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 26,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 32,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "no-unused-vars",
+            "line": 32,
+            "message": "'req' is defined but never used. Allowed unused args must match /^_/u."
+          },
+          {
+            "rule": "no-unused-vars",
+            "line": 32,
+            "message": "'res' is defined but never used. Allowed unused args must match /^_/u."
+          },
+          {
+            "rule": "indent",
+            "line": 33,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 34,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 36,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 41,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 42,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 43,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 44,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 46,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 47,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 48,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 50,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 51,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 53,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 58,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "no-unused-vars",
+            "line": 58,
+            "message": "'session' is defined but never used. Allowed unused args must match /^_/u."
+          },
+          {
+            "rule": "indent",
+            "line": 59,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 60,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 62,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 66,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 67,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 68,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 70,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 74,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 75,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 76,
+            "message": "Expected indentation of 2 spaces but found 4."
+          }
+        ]
+      },
+      {
+        "file": "/Users/zhibinpan/workspace/coc/login/auth-providers/local/index.js",
+        "issues": [
+          {
+            "rule": "indent",
+            "line": 10,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 11,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 12,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 13,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "comma-dangle",
+            "line": 13,
+            "message": "Missing trailing comma."
+          },
+          {
+            "rule": "indent",
+            "line": 14,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 15,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 17,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 18,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 19,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 20,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 22,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 23,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 24,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 25,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 27,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 28,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 29,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 30,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "comma-dangle",
+            "line": 30,
+            "message": "Missing trailing comma."
+          },
+          {
+            "rule": "indent",
+            "line": 31,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 32,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 34,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "no-unused-vars",
+            "line": 34,
+            "message": "'res' is defined but never used. Allowed unused args must match /^_/u."
+          },
+          {
+            "rule": "indent",
+            "line": 35,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 37,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 38,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 39,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 41,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 42,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 44,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 45,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 46,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 47,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 48,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 49,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "comma-dangle",
+            "line": 49,
+            "message": "Missing trailing comma."
+          },
+          {
+            "rule": "indent",
+            "line": 50,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 51,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 53,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 54,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 55,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 56,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 57,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 58,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "no-unused-vars",
+            "line": 58,
+            "message": "'req' is defined but never used. Allowed unused args must match /^_/u."
+          },
+          {
+            "rule": "no-unused-vars",
+            "line": 58,
+            "message": "'res' is defined but never used. Allowed unused args must match /^_/u."
+          },
+          {
+            "rule": "indent",
+            "line": 59,
+            "message": "Expected indentation of 10 spaces but found 20."
+          },
+          {
+            "rule": "indent",
+            "line": 60,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "comma-dangle",
+            "line": 60,
+            "message": "Missing trailing comma."
+          },
+          {
+            "rule": "indent",
+            "line": 61,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "comma-dangle",
+            "line": 61,
+            "message": "Missing trailing comma."
+          },
+          {
+            "rule": "indent",
+            "line": 62,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 63,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 65,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 66,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 67,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 69,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 70,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 71,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 73,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 74,
+            "message": "Expected indentation of 2 spaces but found 4."
+          }
+        ]
+      },
+      {
+        "file": "/Users/zhibinpan/workspace/coc/login/auth-providers/sso/index.js",
+        "issues": [
+          {
+            "rule": "indent",
+            "line": 11,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 12,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 13,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 14,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "comma-dangle",
+            "line": 14,
+            "message": "Missing trailing comma."
+          },
+          {
+            "rule": "indent",
+            "line": 15,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 17,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 18,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 19,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "camelcase",
+            "line": 19,
+            "message": "Identifier 'oauth_url' is not in camel case."
+          },
+          {
+            "rule": "indent",
+            "line": 20,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "camelcase",
+            "line": 20,
+            "message": "Identifier 'token_url' is not in camel case."
+          },
+          {
+            "rule": "indent",
+            "line": 21,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "camelcase",
+            "line": 21,
+            "message": "Identifier 'userinfo_url' is not in camel case."
+          },
+          {
+            "rule": "indent",
+            "line": 22,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "camelcase",
+            "line": 22,
+            "message": "Identifier 'client_id' is not in camel case."
+          },
+          {
+            "rule": "indent",
+            "line": 23,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "camelcase",
+            "line": 23,
+            "message": "Identifier 'client_secret' is not in camel case."
+          },
+          {
+            "rule": "indent",
+            "line": 24,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "camelcase",
+            "line": 24,
+            "message": "Identifier 'redirect_uri' is not in camel case."
+          },
+          {
+            "rule": "comma-dangle",
+            "line": 24,
+            "message": "Missing trailing comma."
+          },
+          {
+            "rule": "indent",
+            "line": 25,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 26,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 28,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 29,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 30,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 31,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 32,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 34,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 35,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 37,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 38,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 39,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 40,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 42,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 43,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 44,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "camelcase",
+            "line": 44,
+            "message": "Identifier 'oauth_url' is not in camel case."
+          },
+          {
+            "rule": "indent",
+            "line": 45,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "camelcase",
+            "line": 45,
+            "message": "Identifier 'client_id' is not in camel case."
+          },
+          {
+            "rule": "indent",
+            "line": 46,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "camelcase",
+            "line": 46,
+            "message": "Identifier 'redirect_uri' is not in camel case."
+          },
+          {
+            "rule": "indent",
+            "line": 47,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 48,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "camelcase",
+            "line": 48,
+            "message": "Identifier 'login_type' is not in camel case."
+          },
+          {
+            "rule": "comma-dangle",
+            "line": 48,
+            "message": "Missing trailing comma."
+          },
+          {
+            "rule": "indent",
+            "line": 49,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 50,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 52,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "max-lines-per-function",
+            "line": 52,
+            "message": "Async method 'authenticate' has too many lines (57). Maximum allowed is 50."
+          },
+          {
+            "rule": "complexity",
+            "line": 52,
+            "message": "Async method 'authenticate' has a complexity of 14. Maximum allowed is 10."
+          },
+          {
+            "rule": "no-unused-vars",
+            "line": 52,
+            "message": "'res' is defined but never used. Allowed unused args must match /^_/u."
+          },
+          {
+            "rule": "indent",
+            "line": 53,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "no-unused-vars",
+            "line": 53,
+            "message": "'state' is assigned a value but never used."
+          },
+          {
+            "rule": "camelcase",
+            "line": 53,
+            "message": "Identifier 'redirect_uri' is not in camel case."
+          },
+          {
+            "rule": "no-unused-vars",
+            "line": 53,
+            "message": "'redirect_uri' is assigned a value but never used."
+          },
+          {
+            "rule": "indent",
+            "line": 55,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 56,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 57,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 59,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 60,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 61,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 62,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "camelcase",
+            "line": 62,
+            "message": "Identifier 'grant_type' is not in camel case."
+          },
+          {
+            "rule": "indent",
+            "line": 63,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "camelcase",
+            "line": 63,
+            "message": "Identifier 'client_id' is not in camel case."
+          },
+          {
+            "rule": "indent",
+            "line": 64,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "camelcase",
+            "line": 64,
+            "message": "Identifier 'client_secret' is not in camel case."
+          },
+          {
+            "rule": "indent",
+            "line": 65,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "object-shorthand",
+            "line": 65,
+            "message": "Expected property shorthand."
+          },
+          {
+            "rule": "indent",
+            "line": 66,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "camelcase",
+            "line": 66,
+            "message": "Identifier 'redirect_uri' is not in camel case."
+          },
+          {
+            "rule": "comma-dangle",
+            "line": 66,
+            "message": "Missing trailing comma."
+          },
+          {
+            "rule": "indent",
+            "line": 67,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 69,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 70,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 71,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 72,
+            "message": "Expected indentation of 10 spaces but found 20."
+          },
+          {
+            "rule": "comma-dangle",
+            "line": 72,
+            "message": "Missing trailing comma."
+          },
+          {
+            "rule": "indent",
+            "line": 73,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 74,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "comma-dangle",
+            "line": 74,
+            "message": "Missing trailing comma."
+          },
+          {
+            "rule": "indent",
+            "line": 75,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 77,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "camelcase",
+            "line": 77,
+            "message": "Identifier 'access_token' is not in camel case."
+          },
+          {
+            "rule": "camelcase",
+            "line": 77,
+            "message": "Identifier 'token_type' is not in camel case."
+          },
+          {
+            "rule": "camelcase",
+            "line": 77,
+            "message": "Identifier 'expires_in' is not in camel case."
+          },
+          {
+            "rule": "no-unused-vars",
+            "line": 77,
+            "message": "'expires_in' is assigned a value but never used."
+          },
+          {
+            "rule": "indent",
+            "line": 78,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 80,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 81,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 82,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 83,
+            "message": "Expected indentation of 10 spaces but found 20."
+          },
+          {
+            "rule": "camelcase",
+            "line": 83,
+            "message": "Identifier 'token_type' is not in camel case."
+          },
+          {
+            "rule": "camelcase",
+            "line": 83,
+            "message": "Identifier 'access_token' is not in camel case."
+          },
+          {
+            "rule": "comma-dangle",
+            "line": 83,
+            "message": "Missing trailing comma."
+          },
+          {
+            "rule": "indent",
+            "line": 84,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 85,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "comma-dangle",
+            "line": 85,
+            "message": "Missing trailing comma."
+          },
+          {
+            "rule": "indent",
+            "line": 86,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 88,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 90,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 91,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 92,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 93,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 94,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 96,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 97,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 98,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 100,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 102,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 103,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 104,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 105,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 106,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 107,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 108,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "camelcase",
+            "line": 108,
+            "message": "Identifier 'access_token' is not in camel case."
+          },
+          {
+            "rule": "object-shorthand",
+            "line": 108,
+            "message": "Expected property shorthand."
+          },
+          {
+            "rule": "camelcase",
+            "line": 108,
+            "message": "Identifier 'access_token' is not in camel case."
+          },
+          {
+            "rule": "comma-dangle",
+            "line": 108,
+            "message": "Missing trailing comma."
+          },
+          {
+            "rule": "indent",
+            "line": 109,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 111,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 112,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 113,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 114,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 115,
+            "message": "Expected indentation of 10 spaces but found 20."
+          },
+          {
+            "rule": "indent",
+            "line": 116,
+            "message": "Expected indentation of 10 spaces but found 20."
+          },
+          {
+            "rule": "indent",
+            "line": 117,
+            "message": "Expected indentation of 10 spaces but found 20."
+          },
+          {
+            "rule": "comma-dangle",
+            "line": 117,
+            "message": "Missing trailing comma."
+          },
+          {
+            "rule": "indent",
+            "line": 118,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 119,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 120,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 121,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 122,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 124,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 125,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 126,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 127,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 128,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 129,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "no-unused-vars",
+            "line": 129,
+            "message": "'req' is defined but never used. Allowed unused args must match /^_/u."
+          },
+          {
+            "rule": "no-unused-vars",
+            "line": 129,
+            "message": "'res' is defined but never used. Allowed unused args must match /^_/u."
+          },
+          {
+            "rule": "indent",
+            "line": 130,
+            "message": "Expected indentation of 10 spaces but found 20."
+          },
+          {
+            "rule": "indent",
+            "line": 131,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "comma-dangle",
+            "line": 131,
+            "message": "Missing trailing comma."
+          },
+          {
+            "rule": "indent",
+            "line": 132,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 133,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "indent",
+            "line": 134,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 135,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "indent",
+            "line": 136,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "no-unused-vars",
+            "line": 136,
+            "message": "'req' is defined but never used. Allowed unused args must match /^_/u."
+          },
+          {
+            "rule": "no-unused-vars",
+            "line": 136,
+            "message": "'res' is defined but never used. Allowed unused args must match /^_/u."
+          },
+          {
+            "rule": "indent",
+            "line": 137,
+            "message": "Expected indentation of 10 spaces but found 20."
+          },
+          {
+            "rule": "indent",
+            "line": 138,
+            "message": "Expected indentation of 8 spaces but found 16."
+          },
+          {
+            "rule": "comma-dangle",
+            "line": 138,
+            "message": "Missing trailing comma."
+          },
+          {
+            "rule": "indent",
+            "line": 139,
+            "message": "Expected indentation of 6 spaces but found 12."
+          },
+          {
+            "rule": "comma-dangle",
+            "line": 139,
+            "message": "Missing trailing comma."
+          },
+          {
+            "rule": "indent",
+            "line": 140,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 141,
+            "message": "Expected indentation of 2 spaces but found 4."
+          }
+        ]
+      },
+      {
+        "file": "/Users/zhibinpan/workspace/coc/login/server.js",
+        "issues": [
+          {
+            "rule": "indent",
+            "line": 26,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 27,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 28,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 29,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 30,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 31,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 32,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 43,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 44,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 45,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 46,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 47,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 48,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 49,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 50,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 58,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 59,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 60,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 61,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "comma-dangle",
+            "line": 61,
+            "message": "Missing trailing comma."
+          },
+          {
+            "rule": "indent",
+            "line": 69,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 70,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 72,
+            "message": "Expected indentation of 2 spaces but found 4."
+          },
+          {
+            "rule": "indent",
+            "line": 73,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 74,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 75,
+            "message": "Expected indentation of 4 spaces but found 8."
+          },
+          {
+            "rule": "indent",
+            "line": 76,
+            "message": "Expected indentation of 2 spaces but found 4."
+          }
+        ]
+      }
+    ],
+    "totalIssues": 2,
+    "score": 80
+  },
+  "duplication": {
+    "score": 100,
+    "percentage": 0,
+    "duplicatedLines": 0
+  },
+  "security": {
+    "vulnerabilities": {},
+    "totalVulnerabilities": 0,
+    "score": 100
+  },
+  "linting": {
+    "score": 0,
+    "errors": 451,
+    "warnings": 54,
+    "output": "\n> login-server@1.0.0 lint\n> eslint *.js auth-providers/**/*.js\n\n\n/Users/zhibinpan/workspace/coc/login/auth-manager.js\n    1:7   error    'path' is assigned a value but never used                      no-unused-vars\n    2:7   error    'crypto' is assigned a value but never used                    no-unused-vars\n    9:1   error    Expected indentation of 2 spaces but found 4                   indent\n   10:1   error    Expected indentation of 4 spaces but found 8                   indent\n   11:1   error    Expected indentation of 4 spaces but found 8                   indent\n   12:1   error    Expected indentation of 4 spaces but found 8                   indent\n   14:1   error    Expected indentation of 4 spaces but found 8                   indent\n   15:1   error    Expected indentation of 4 spaces but found 8                   indent\n   16:1   error    Expected indentation of 2 spaces but found 4                   indent\n   18:1   error    Expected indentation of 2 spaces but found 4 "
+  },
+  "overallScore": 74,
+  "recommendations": [
+    {
+      "category": "Complexity",
+      "priority": "High",
+      "description": "Found 2 complexity issues. Consider refactoring complex functions.",
+      "actions": [
+        "Break down complex functions into smaller ones",
+        "Reduce parameter count by using objects",
+        "Simplify nested logic structures"
+      ]
+    },
+    {
+      "category": "Code Style",
+      "priority": "Low",
+      "description": "Found 451 errors and 54 warnings.",
+      "actions": [
+        "Fix linting errors",
+        "Configure IDE for automatic formatting",
+        "Set up pre-commit hooks"
+      ]
+    }
+  ]
+}

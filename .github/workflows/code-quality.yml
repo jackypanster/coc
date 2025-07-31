@@ -1,0 +1,214 @@
+name: Code Quality Check
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    # 每周一早上8点运行质量检查
+    - cron: '0 8 * * 1'
+
+env:
+  # 质量门禁阈值
+  MAX_COMPLEXITY_VIOLATIONS: 0
+  MAX_DUPLICATION_PERCENTAGE: 10
+  MAX_SECURITY_VULNERABILITIES: 0
+
+jobs:
+  quality-gate:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # 获取完整历史用于变更分析
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: login/package-lock.json
+    
+    - name: Install dependencies
+      run: |
+        cd login
+        npm ci
+    
+    - name: Run comprehensive linting
+      run: |
+        cd login
+        npm run lint
+        echo "✅ ESLint checks passed" >> $GITHUB_STEP_SUMMARY
+      continue-on-error: false
+    
+    - name: Generate complexity analysis
+      run: |
+        cd login
+        npm run complexity
+        npm run complexity:html
+        echo "## 📊 Code Complexity Analysis" >> $GITHUB_STEP_SUMMARY
+        
+        if [ -f complexity-report.json ]; then
+          # 统计复杂度违规数量
+          COMPLEXITY_COUNT=$(jq '[.[] | select(.messages[]?.ruleId == "complexity" and .messages[]?.severity == 2)] | length' complexity-report.json 2>/dev/null || echo "0")
+          FUNCTION_LENGTH_COUNT=$(jq '[.[] | select(.messages[]?.ruleId == "max-lines-per-function" and .messages[]?.severity == 2)] | length' complexity-report.json 2>/dev/null || echo "0")
+          PARAM_COUNT=$(jq '[.[] | select(.messages[]?.ruleId == "max-params" and .messages[]?.severity == 2)] | length' complexity-report.json 2>/dev/null || echo "0")
+          
+          echo "- High complexity functions: $COMPLEXITY_COUNT" >> $GITHUB_STEP_SUMMARY
+          echo "- Long functions: $FUNCTION_LENGTH_COUNT" >> $GITHUB_STEP_SUMMARY
+          echo "- Functions with too many parameters: $PARAM_COUNT" >> $GITHUB_STEP_SUMMARY
+          
+          # 保存统计信息供后续步骤使用
+          echo "COMPLEXITY_VIOLATIONS=$COMPLEXITY_COUNT" >> $GITHUB_ENV
+          echo "FUNCTION_LENGTH_VIOLATIONS=$FUNCTION_LENGTH_COUNT" >> $GITHUB_ENV
+          echo "PARAM_VIOLATIONS=$PARAM_COUNT" >> $GITHUB_ENV
+        else
+          echo "- No complexity issues detected ✅" >> $GITHUB_STEP_SUMMARY
+          echo "COMPLEXITY_VIOLATIONS=0" >> $GITHUB_ENV
+          echo "FUNCTION_LENGTH_VIOLATIONS=0" >> $GITHUB_ENV
+          echo "PARAM_VIOLATIONS=0" >> $GITHUB_ENV
+        fi
+    
+    - name: Check code duplication
+      run: |
+        cd login
+        npm run duplication
+        npm run duplication:html
+        echo "## 🔍 Code Duplication Analysis" >> $GITHUB_STEP_SUMMARY
+        
+        if [ -f jscpd-report.json ]; then
+          # 解析重复代码百分比
+          DUPLICATION_PERCENTAGE=$(jq -r '.statistics.total.percentage // 0' jscpd-report.json 2>/dev/null || echo "0")
+          DUPLICATED_LINES=$(jq -r '.statistics.total.duplicatedLines // 0' jscpd-report.json 2>/dev/null || echo "0")
+          
+          echo "- Code duplication: ${DUPLICATION_PERCENTAGE}%" >> $GITHUB_STEP_SUMMARY
+          echo "- Duplicated lines: $DUPLICATED_LINES" >> $GITHUB_STEP_SUMMARY
+          
+          echo "DUPLICATION_PERCENTAGE=$DUPLICATION_PERCENTAGE" >> $GITHUB_ENV
+        else
+          echo "- No code duplication detected ✅" >> $GITHUB_STEP_SUMMARY
+          echo "DUPLICATION_PERCENTAGE=0" >> $GITHUB_ENV
+        fi
+      continue-on-error: true
+    
+    - name: Security audit
+      run: |
+        cd login
+        npm run security
+        echo "## 🔒 Security Analysis" >> $GITHUB_STEP_SUMMARY
+        
+        # 检查安全漏洞
+        AUDIT_RESULT=$(npm audit --json 2>/dev/null || echo '{"vulnerabilities":{}}')
+        HIGH_VULNS=$(echo "$AUDIT_RESULT" | jq -r '.vulnerabilities.high // 0' 2>/dev/null || echo "0")
+        CRITICAL_VULNS=$(echo "$AUDIT_RESULT" | jq -r '.vulnerabilities.critical // 0' 2>/dev/null || echo "0")
+        
+        echo "- Critical vulnerabilities: $CRITICAL_VULNS" >> $GITHUB_STEP_SUMMARY
+        echo "- High vulnerabilities: $HIGH_VULNS" >> $GITHUB_STEP_SUMMARY
+        
+        echo "SECURITY_VIOLATIONS=$((CRITICAL_VULNS + HIGH_VULNS))" >> $GITHUB_ENV
+      continue-on-error: true
+    
+    - name: Generate change impact analysis
+      if: github.event_name == 'pull_request'
+      run: |
+        echo "## 📈 Change Impact Analysis" >> $GITHUB_STEP_SUMMARY
+        
+        # 分析变更的文件
+        CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -E '\.(js|json)$' | wc -l)
+        CHANGED_JS_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep '\.js$' | wc -l)
+        
+        echo "- Total files changed: $CHANGED_FILES" >> $GITHUB_STEP_SUMMARY
+        echo "- JavaScript files changed: $CHANGED_JS_FILES" >> $GITHUB_STEP_SUMMARY
+        
+        # 如果变更文件较多，建议更严格的审查
+        if [ "$CHANGED_JS_FILES" -gt 5 ]; then
+          echo "- ⚠️ Large changeset detected - recommend thorough review" >> $GITHUB_STEP_SUMMARY
+        fi
+    
+    - name: Upload quality reports
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: quality-reports-${{ github.run_number }}
+        path: |
+          login/complexity-report.json
+          login/complexity-report.html
+          login/jscpd-report.json
+          login/jscpd-report.html
+        retention-days: 30
+    
+    - name: Quality Gate Evaluation
+      run: |
+        echo "## 🚦 Quality Gate Results" >> $GITHUB_STEP_SUMMARY
+        echo "Running quality gate evaluation..."
+        
+        GATE_FAILED=false
+        
+        # 检查复杂度违规
+        TOTAL_COMPLEXITY_VIOLATIONS=$((${COMPLEXITY_VIOLATIONS:-0} + ${FUNCTION_LENGTH_VIOLATIONS:-0} + ${PARAM_VIOLATIONS:-0}))
+        if [ "$TOTAL_COMPLEXITY_VIOLATIONS" -gt "$MAX_COMPLEXITY_VIOLATIONS" ]; then
+          echo "❌ **COMPLEXITY GATE FAILED**: $TOTAL_COMPLEXITY_VIOLATIONS violations (max: $MAX_COMPLEXITY_VIOLATIONS)" >> $GITHUB_STEP_SUMMARY
+          GATE_FAILED=true
+        else
+          echo "✅ **COMPLEXITY GATE PASSED**: $TOTAL_COMPLEXITY_VIOLATIONS violations (max: $MAX_COMPLEXITY_VIOLATIONS)" >> $GITHUB_STEP_SUMMARY
+        fi
+        
+        # 检查代码重复
+        DUPLICATION_NUM=$(echo "${DUPLICATION_PERCENTAGE:-0}" | cut -d'.' -f1)
+        if [ "$DUPLICATION_NUM" -gt "$MAX_DUPLICATION_PERCENTAGE" ]; then
+          echo "❌ **DUPLICATION GATE FAILED**: ${DUPLICATION_PERCENTAGE}% (max: ${MAX_DUPLICATION_PERCENTAGE}%)" >> $GITHUB_STEP_SUMMARY
+          GATE_FAILED=true
+        else
+          echo "✅ **DUPLICATION GATE PASSED**: ${DUPLICATION_PERCENTAGE}% (max: ${MAX_DUPLICATION_PERCENTAGE}%)" >> $GITHUB_STEP_SUMMARY
+        fi
+        
+        # 检查安全漏洞
+        if [ "${SECURITY_VIOLATIONS:-0}" -gt "$MAX_SECURITY_VULNERABILITIES" ]; then
+          echo "❌ **SECURITY GATE FAILED**: ${SECURITY_VIOLATIONS} vulnerabilities (max: $MAX_SECURITY_VULNERABILITIES)" >> $GITHUB_STEP_SUMMARY
+          GATE_FAILED=true
+        else
+          echo "✅ **SECURITY GATE PASSED**: ${SECURITY_VIOLATIONS} vulnerabilities (max: $MAX_SECURITY_VULNERABILITIES)" >> $GITHUB_STEP_SUMMARY
+        fi
+        
+        # 最终结果
+        if [ "$GATE_FAILED" = true ]; then
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "🚨 **OVERALL RESULT: QUALITY GATE FAILED**" >> $GITHUB_STEP_SUMMARY
+          echo "Please address the issues above before merging." >> $GITHUB_STEP_SUMMARY
+          exit 1
+        else
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "🎉 **OVERALL RESULT: QUALITY GATE PASSED**" >> $GITHUB_STEP_SUMMARY
+          echo "All quality checks completed successfully!" >> $GITHUB_STEP_SUMMARY
+        fi
+    
+    - name: Comment PR with quality results
+      if: github.event_name == 'pull_request' && always()
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          
+          // 读取质量报告摘要
+          let summary = '';
+          try {
+            summary = fs.readFileSync(process.env.GITHUB_STEP_SUMMARY, 'utf8');
+          } catch (error) {
+            summary = 'Quality check completed. See workflow details for results.';
+          }
+          
+          const comment = `## 🔍 Code Quality Report
+          
+          ${summary}
+          
+          ---
+          *This comment was automatically generated by the Code Quality workflow.*`;
+          
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: comment
+          });

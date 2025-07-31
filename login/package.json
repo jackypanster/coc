@@ -4,7 +4,18 @@
   "description": "Login server for ttyd",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "lint": "eslint *.js auth-providers/**/*.js",
+    "lint:fix": "eslint *.js auth-providers/**/*.js --fix",
+    "complexity": "eslint *.js auth-providers/**/*.js --format json > complexity-report.json || true",
+    "complexity:html": "eslint *.js auth-providers/**/*.js --format html > complexity-report.html || true",
+    "duplication": "jscpd --threshold 10 --reporters console,json --output ./jscpd-report.json .",
+    "duplication:html": "jscpd --threshold 10 --reporters html --output ./jscpd-report.html .",
+    "security": "npm audit --audit-level moderate",
+    "quality-check": "npm run lint && npm run complexity && npm run duplication",
+    "quality-report": "npm run complexity:html && npm run duplication:html && echo 'Quality reports generated: complexity-report.html, jscpd-report.html'",
+    "pre-commit": "npm run quality-check",
+    "ci-quality": "npm run lint && npm run complexity && npm run duplication && npm run security"
   },
   "dependencies": {
     "express": "^4.18.2",
@@ -13,5 +24,10 @@
     "http-proxy-middleware": "^2.0.6",
     "axios": "^1.6.0",
     "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-plugin-complexity": "^1.0.2",
+    "jscpd": "^3.5.10"
   }
 }

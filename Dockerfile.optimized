@@ -1,6 +1,6 @@
 # 优化的 Dockerfile - 基于预构建的基础镜像
 # 注意：基础镜像标签将在构建时通过 --build-arg 传递
-ARG BASE_VERSION=v1.0.0
+ARG BASE_VERSION
 FROM code-on-cloud-base:${BASE_VERSION}
 
 # 构建参数 - 由 build.sh 从 versions.env 传递
