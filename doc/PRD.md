@@ -1,38 +1,72 @@
-# Code on Cloud 需求文档
+# Code on Cloud 产品需求文档
 
-## 概述
-请提供一个 Dockerfile，基于 `debian:bookworm` 创建一个镜像。
+## 项目概述
 
-## 安装要求
+Code on Cloud 是一个基于容器的云端开发环境，为开发者提供完整的开发工具链和Web终端访问能力。
 
-### 1. 核心组件安装
-- **Claude Code**: `npm install -g @anthropic-ai/claude-code`
-  - 官网: https://github.com/anthropics/claude-code
-- **Claude Code Router**: `npm install -g @musistudio/claude-code-router`
-  - 官网: https://github.com/musistudio/claude-code-router/tree/main
-- **TTYD**: https://github.com/tsl0922/ttyd
+## 核心需求
 
-### 2. 脚本提供
-- 一键编译脚本
-- 一键启动脚本
+### 1. 容器化开发环境
+- 基于 `debian:bookworm` 构建稳定的开发环境
+- 预装 Node.js、Python、Git 等常用开发工具
+- 支持中文环境和常用编译工具链
 
-## 容器运行配置
+### 2. 核心组件集成
+- **Claude Code**: AI 代码助手工具
+- **Claude Code Router**: 代码路由服务
+- **TTYD**: Web终端服务，提供浏览器内终端访问
+- **Nginx**: 反向代理服务
 
-### 3. 目录挂载
-- 用户在自己的工作目录启动容器
-- 将当前 `pwd` 挂载到容器的 `/app` 目录
+### 3. 认证系统
+- 支持 SSO 单点登录集成
+- 支持本地开发模式
+- 用户认证后才能访问终端服务
 
-### 4. 服务启动
-- **TTYD**: 端口 `7681`，host `0.0.0.0`
+### 4. 服务架构
+- **端口配置**: 对外暴露 80 端口
+- **内部服务**: 
+  - TTYD 服务运行在 7681 端口
+  - 登录服务运行在 3000 端口
+  - Nginx 提供反向代理和静态文件服务
 
-### 5. 访问方式
-- 用户访问 `http://localhost:7681` 即可访问 TTYD
-- 容器只暴露 TTYD 端口
+### 5. 工作目录管理
+- 用户工作目录挂载到容器的 `/workspace`
+- 保持代码在主机本地，工具在容器内的设计理念
+- 支持实时代码编辑和工具链访问
 
-## 配置文件处理
+### 6. 配置管理
+- 统一的版本配置文件 `versions.env`
+- 环境配置文件 `login/.env`
+- Claude Code Router 配置文件自动部署
 
-### 6. 环境配置
-- 将当前目录的 `config` 拷贝到镜像中的 `~/.claude-code-router/config.json`
+## 技术实现
 
-### 7. 登录页面
-- 创建一个用户登录页面，用户登录后才能进入TTYD, 请对接内部的SSO系统
+### 构建系统
+- 分层构建：基础镜像 + 业务镜像
+- 版本管理：动态版本参数传递
+- 缓存优化：利用 Docker BuildKit 缓存机制
+
+### 服务启动
+- 多服务并行启动：TTYD、登录服务、Nginx
+- 优雅关闭：信号处理和进程管理
+- 日志聚合：统一日志输出
+
+### 安全考虑
+- 认证验证：强制用户认证
+- 环境隔离：容器化隔离
+- 配置安全：敏感信息环境变量管理
+
+## 用户体验
+
+### 访问流程
+1. 用户访问 `http://localhost`
+2. 系统重定向到登录页面
+3. 用户完成 SSO 认证或本地认证
+4. 认证成功后进入 Web 终端界面
+5. 在 `/workspace` 目录下进行开发工作
+
+### 开发体验
+- 完整的开发工具链
+- 熟悉的终端环境
+- 本地代码，云端工具的混合模式
+- 支持 tmux 会话管理

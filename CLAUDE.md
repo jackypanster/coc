@@ -1,121 +1,160 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+本文件为 Claude Code 在此代码库中工作时提供指导。
 
-## Project Overview
-Code on Cloud (CoC) is a containerized development environment providing a web-based terminal with tmux session management, xterm.js frontend, SSO authentication and Claude Code integration.
+## 项目概述
 
-## Common Commands
+Code on Cloud (CoC) 是一个容器化的云端开发环境，提供基于Web的终端、tmux会话管理、xterm.js前端、SSO认证和Claude Code集成。
 
-### Building and Running
+## 常用命令
+
+### 构建和运行
 ```bash
-# Build base image (only needed once or when dependencies change)
+# 构建基础镜像（首次使用或依赖变更时）
 ./build-base.sh
 
-# Quick build using cached base image
+# 基于缓存基础镜像快速构建
 ./build.sh
 
-# Full rebuild (base + application)
+# 完整重建（基础镜像 + 应用镜像）
 ./build-full.sh
 
-# Start with local authentication (development)
+# 使用本地认证启动（开发环境）
 AUTH_PROVIDER=local ./start.sh
 
-# Start with SSO authentication (production)
-./start.sh  # defaults to SSO
+# 使用SSO认证启动（生产环境）
+./start.sh  # 默认使用SSO
 ```
 
-### Development Inside Container
+### 容器内开发
 ```bash
-# Run Python scripts
-uv run script.py
+# 运行Python脚本
+python3 script.py
 
-# Node.js development
+# Node.js开发
 npm install
 npm run dev
 npm test
 
-# Claude Code commands
-claude
+# Claude Code命令
+claude-code
 claude-code-router
 
-# tmux commands (Ctrl+A is prefix)
-Ctrl+A | # Split vertical
-Ctrl+A - # Split horizontal  
-Ctrl+A c # New window
-Ctrl+A n # Next window
+# tmux命令（Ctrl+A为前缀键）
+Ctrl+A | # 垂直分割
+Ctrl+A - # 水平分割
+Ctrl+A c # 新建窗口
+Ctrl+A n # 下一个窗口
 ```
 
-## Architecture
+## 系统架构
 
-### Container Structure
-- **Multi-stage Docker build** for optimization:
-  - `Dockerfile.base`: Stable dependencies (Node.js, Python, tools, tmux)
-  - `Dockerfile.optimized`: Application layer
-  - Base image cached at `registry.cn-beijing.aliyuncs.com/zhibinpan/coc-base:latest`
+### 容器结构
+- **分层Docker构建**优化：
+  - `Dockerfile.base`: 稳定依赖（Node.js、Python、工具、tmux）
+  - `Dockerfile.optimized`: 应用层
+  - 基础镜像通过`versions.env`管理版本
 
-### Authentication System (Pluggable)
-- **AuthProvider Interface**: Base class for all authentication implementations
-- **AuthManager**: Loads and manages authentication providers
-- **Authentication Modes**:
-  - `AUTH_PROVIDER=sso`: Enterprise SSO (OAuth2.0) - Production
-  - `AUTH_PROVIDER=local`: Local development mode - Any username/password
-  - Custom providers can be added in `login/auth-providers/`
+### 认证系统（可插拔）
+- **AuthProvider接口**: 所有认证实现的基类
+- **AuthManager**: 加载和管理认证提供者
+- **认证模式**:
+  - `AUTH_PROVIDER=sso`: 企业SSO（OAuth2.0）- 生产环境
+  - `AUTH_PROVIDER=local`: 本地开发模式 - 任意用户名密码
+  - 可在`login/auth-providers/`中添加自定义提供者
 
-### Authentication Flow
-1. User accesses web terminal → Nginx checks authentication
-2. Unauthenticated → Redirect to login page
-3. Authentication via selected provider (SSO/Local/Custom)
-4. Session cookie set → Access granted to terminal (xterm.js + tmux)
+### 认证流程
+1. 用户访问Web终端 → Nginx检查认证状态
+2. 未认证 → 重定向到登录页面
+3. 通过选定提供者认证（SSO/本地/自定义）
+4. 设置会话Cookie → 授权访问终端（xterm.js + tmux）
 
-### Key Components
-- **Login Server** (`login/server.js`): Express app with pluggable auth
-- **Auth Providers** (`login/auth-providers/`): Modular authentication implementations
-- **Nginx** (`login/nginx.conf`): Reverse proxy routing and auth enforcement
-- **Terminal Stack**:
-  - **xterm.js**: Frontend terminal emulator in `login/terminal.html`
-  - **ttyd**: WebSocket terminal server on port 7681
-  - **tmux**: Session management with persistence
-- **Session Management**: Configurable per auth provider
+### 核心组件
+- **登录服务器**（`login/server.js`）: 带可插拔认证的Express应用
+- **认证提供者**（`login/auth-providers/`）: 模块化认证实现
+- **Nginx**（`login/nginx.conf`）: 反向代理路由和认证强制
+- **终端技术栈**:
+  - **xterm.js**: 前端终端模拟器
+  - **ttyd**: WebSocket终端服务器（7681端口）
+  - **tmux**: 会话管理和持久化
+- **会话管理**: 每个认证提供者可配置
 
-## Configuration
+## 配置管理
 
-### Environment Variables
-- Authentication mode: `AUTH_PROVIDER=sso|local` (default: sso)
-- SSO credentials: Set in `.env` file (GFT_CLIENT_ID, GFT_CLIENT_SECRET)
-- Versions: Managed in `versions.env` (NODE_VERSION, CLAUDE_VERSION, etc.)
-- Claude Code Router: Configure in `config.json`
+### 环境变量
+- 认证模式: `AUTH_PROVIDER=sso|local`（默认: sso）
+- SSO凭据: 在`login/.env`文件中设置（GFT_CLIENT_ID, GFT_CLIENT_SECRET）
+- 版本管理: 在`versions.env`中管理（NODE_VERSION, CLAUDE_CODE_VERSION等）
+- Claude Code Router: 在`config.json`中配置
 
-### Important Files
-- `login/server.js`: Main server with authentication hooks
-- `login/terminal.html`: xterm.js based terminal interface
-- `login/auth-provider.js`: Authentication provider interface
-- `login/auth-manager.js`: Authentication management system
-- `tmux.conf`: tmux configuration for development
-- `login/auth-providers/`: Authentication implementations (SSO, Local, etc.)
-- `doc/auth-provider-guide.md`: Guide for creating custom auth providers
-- `doc/sso-integration.md`: SSO setup guide
-- `versions.env`: Component version management
+### 重要文件
+- `versions.env`: 统一版本配置文件
+- `login/server.js`: 带认证钩子的主服务器
+- `login/auth-provider.js`: 认证提供者接口
+- `login/auth-manager.js`: 认证管理系统
+- `login/auth-providers/`: 认证实现（SSO、本地等）
+- `tmux.conf`: 开发用tmux配置
+- `config.json`: Claude Code Router配置
 
-## Testing and Debugging
+## 版本管理
 
-### SSO Authentication
-- Check logs: `docker logs coc`
-- Verify `.env` configuration
-- Test SSO redirect URLs match configuration
+### 动态版本系统
+- 所有版本信息统一在`versions.env`中管理
+- Docker构建时自动读取版本参数
+- 支持版本格式验证和错误提示
+- 构建脚本自动传递版本参数
 
-### Container Access
-- Web terminal: http://localhost (after authentication)
-- Direct container shell: `docker exec -it coc /bin/bash`
+### 版本配置示例
+```bash
+# Docker镜像版本
+VERSION=v1.0.0
+IMAGE_NAME=cloud-code-dev
 
-## Security Considerations
-- Never commit `.env` files with credentials
-- Session cookies are HTTP-only
-- SSO tokens validated server-side
-- Sensitive data masked in logs
+# NPM包版本
+CLAUDE_CODE_VERSION=1.0.54
+CLAUDE_ROUTER_VERSION=1.0.26
 
-## Development Tips
-- Volume mount at `/workspace` persists code changes
-- All development tools pre-installed in container
-- Use `uv` for Python package management
-- Claude Code available globally in terminal
+# Node.js版本
+NODE_VERSION=20
+```
+
+## 测试和调试
+
+### 认证调试
+- 查看日志: `docker logs cloud-code-dev`
+- 验证`.env`配置
+- 测试SSO重定向URL配置
+
+### 容器访问
+- Web终端: http://localhost（认证后）
+- 直接容器Shell: `docker exec -it cloud-code-dev /bin/bash`
+
+### 版本一致性测试
+```bash
+# 运行版本一致性测试
+./test-version-consistency.sh
+
+# CI环境测试
+./scripts/ci-version-test.sh
+```
+
+## 安全考虑
+- 永远不要提交包含凭据的`.env`文件
+- 会话Cookie为HTTP-only
+- SSO令牌在服务端验证
+- 日志中屏蔽敏感数据
+
+## 开发技巧
+- `/workspace`卷挂载保持代码变更
+- 容器内预装所有开发工具
+- 使用Python 3和pip进行包管理
+- Claude Code在终端中全局可用
+- tmux会话在容器重启后保持
+
+## 文档结构
+- `README.md`: 项目概述和快速开始
+- `doc/PRD.md`: 产品需求文档
+- `doc/design.md`: 系统设计文档
+- `doc/认证系统指南.md`: 认证系统使用指南
+- `doc/终端使用指南.md`: tmux和终端使用指南
+- `doc/version-management-*.md`: 版本管理相关文档

@@ -1,23 +1,99 @@
-# Login Feature Design
+# Code on Cloud 系统设计文档
 
-This document outlines the design and architecture of the login feature for the Code on Cloud environment.
+## 系统架构概述
 
-## 1. Architecture
+Code on Cloud 采用基于反向代理的多服务架构，通过 Nginx 统一管理流量分发和用户认证。
 
-The login system uses a **Reverse Proxy** pattern. Nginx acts as the gatekeeper in front of the `ttyd` terminal service and a dedicated Node.js login server.
+## 核心架构
 
-## 2. Authentication Flow
+### 1. 服务组件
 
-1.  When a user accesses the service, Nginx intercepts the request.
-2.  If the user is not authenticated (i.e., no valid session cookie), they are redirected to a custom HTML login page.
-3.  This login page is served by a small Node.js (Express) application.
-4.  The user submits their credentials (currently hardcoded as `admin`/`password`).
-5.  The Node.js server validates the credentials, and if successful, sets an HTTP-only cookie to establish a session.
-6.  The user is then redirected back to the main application.
-7.  Nginx now sees the valid session cookie and proxies the user's request to the `ttyd` service, granting them access to the terminal.
+- **Nginx**: 反向代理服务器，负责流量路由和认证检查
+- **登录服务**: Node.js Express 应用，处理用户认证
+- **TTYD 服务**: Web 终端服务，提供浏览器内终端访问
+- **认证管理器**: 可插拔的认证提供者架构
 
-## 3. Component Breakdown
+### 2. 认证流程
 
-*   **Nginx**: Manages all incoming traffic, routes users based on authentication status, and handles SSL termination (if configured).
-*   **Node.js/Express Server**: A lightweight server responsible only for displaying the login form and validating user credentials.
-*   **ttyd**: The core terminal service, configured to only accept internal traffic from the Nginx proxy, preventing direct access.
+1. **访问拦截**: 用户访问系统时，Nginx 检查认证状态
+2. **登录重定向**: 未认证用户被重定向到登录页面
+3. **认证处理**: 登录服务根据配置的认证提供者处理认证请求
+4. **会话建立**: 认证成功后设置 HTTP-only 会话 Cookie
+5. **服务访问**: Nginx 验证会话后代理请求到 TTYD 服务
+
+### 3. 认证提供者架构
+
+系统支持可插拔的认证提供者：
+
+#### SSO 认证提供者
+- 集成企业 SSO 系统
+- 支持 OAuth 2.0 授权码流程
+- 自动用户信息获取和会话管理
+
+#### 本地认证提供者
+- 开发环境使用
+- 简化的认证流程
+- 无需外部依赖
+
+## 技术实现
+
+### 1. 容器化架构
+
+```
+┌─────────────────────────────────────────┐
+│              Docker 容器                 │
+├─────────────────────────────────────────┤
+│  Nginx (80) ──┐                        │
+│               ├── 登录服务 (3000)        │
+│               └── TTYD (7681)           │
+└─────────────────────────────────────────┘
+                    │
+                    ▼
+            主机工作目录 (/workspace)
+```
+
+### 2. 构建系统
+
+- **分层构建**: 基础镜像包含稳定依赖，业务镜像包含应用代码
+- **版本管理**: 通过 `versions.env` 统一管理所有组件版本
+- **缓存优化**: 利用 Docker BuildKit 和分层缓存提升构建速度
+
+### 3. 配置管理
+
+- **环境配置**: `login/.env` 管理认证相关配置
+- **版本配置**: `versions.env` 管理组件版本
+- **应用配置**: `config.json` 管理 Claude Code Router 配置
+
+## 安全设计
+
+### 1. 认证安全
+- HTTP-only Cookie 防止 XSS 攻击
+- 会话超时机制
+- CSRF 保护（通过 SameSite Cookie）
+
+### 2. 网络安全
+- 内部服务仅监听本地接口
+- Nginx 作为唯一对外入口
+- 反向代理隐藏内部服务细节
+
+### 3. 容器安全
+- 非 root 用户运行服务
+- 最小权限原则
+- 环境变量管理敏感信息
+
+## 扩展性设计
+
+### 1. 认证提供者扩展
+- 标准化认证接口
+- 插件式架构
+- 配置驱动的提供者选择
+
+### 2. 服务扩展
+- 微服务架构便于功能扩展
+- 统一的日志和监控接口
+- 容器化部署支持水平扩展
+
+### 3. 配置扩展
+- 环境变量驱动的配置系统
+- 支持多环境配置
+- 热重载配置更新
